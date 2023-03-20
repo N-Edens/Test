@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Animeret kasse</title>
+  <script type="text/javascript" src="d3.js"></script>
+  <style type="text/css">
+  </style>
+</head>
+
+<body>
+  <h1>Animeret kasse</h1>
+
+  <script type="text/javascript">
+
+    // Lav en svg
+    const svg = d3.select("body")
+      .append("svg")
+      .attr("width", 500)
+      .attr("height", 500);
+
+    // Lav en rektangel
+    const rect = svg.append("rect")
+      .attr("x", 50)
+      .attr("y", 50)
+      .attr("width", 50)
+      .attr("height", 50)
+      .attr("stroke", "red")
+      .attr("stroke-width", 2)
+      .attr("fill", "blue");
+
+    // Start animationen ved klik på knap
+    d3.select("body")
+      .append("button")
+      .text("Start animation")
+      .on("click", function() {
+        rect.transition()
+          .duration(2000)
+          .attr("width", 200)
+          .attr("height", 200)
+          .attr("stroke-width", 10)
+          .attr("fill", "orange");
+      });
+
+  </script>
+</body>
+
+</html>

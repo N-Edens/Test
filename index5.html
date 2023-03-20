@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Animation med tre kugler</title>
+  <script type="text/javascript" src="d3.js"></script>
+  <style type="text/css">
+    .ball {
+      fill: red;
+      stroke: black;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Tre kugler der hopper op og ned</h1>
+
+  <button id="klik"><b>Tryk her for at starte animationen!</b></button>
+
+  <br/>
+
+  <script type="text/javascript">
+
+    const ballsData = [1, 2, 3];
+    const ballRadius = 20;
+    const maxHeight = 200;
+    const minHeight = 50;
+
+    // Lav en svg
+    const svg = d3.select("body")
+      .append("svg")
+      .attr("width", 600)
+      .attr("height", 300);
+
+    // Lav kuglerne
+    const balls = svg.selectAll("circle")
+      .data(ballsData)
+      .enter()
+      .append("circle")
+      .attr("class", "ball")
+      .attr("cx", function(d) { return d * 150 - 50; })
+      .attr("cy", maxHeight)
+      .attr("r", ballRadius);
+
+    // Skjul kuglerne
+    balls.transition()
+      .duration(0)
+      .attr("cy", maxHeight);
+
+    // Knapen vælges via dens id 'klik'
+    d3.select("#klik")
+      // Koden herunder køres kun ved tryk på knappen
+      .on("click", function () {
+
+        // Lav en ny transition for hver kugle
+        balls.transition()
+          .delay(function(d) { return d * 500; })
+          .duration(2000)
+          .attr("cy", function(d) {
+            // Beregn højden for denne kugle
+            const offset = d * 10;
+            const time = Date.now() / 1000;
+            const height = Math.sin(time + offset) * (maxHeight - minHeight) / 2 + (maxHeight + minHeight) / 2;
+            return height;
+          });
+
+      });
+
+  </script>
+</body>
+
+</html>

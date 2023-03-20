@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kugle Animation</title>
+  <script type="text/javascript" src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    .ball {
+      fill: red;
+      stroke: black;
+    }
+  </style>
+</head>
+<body>
+  <h1>Kugle Animation</h1>
+  <svg width="500" height="200">
+    <g class="ball-container">
+      <circle class="ball" cx="50" cy="100" r="20"></circle>
+      <circle class="ball" cx="150" cy="100" r="20"></circle>
+      <circle class="ball" cx="250" cy="100" r="20"></circle>
+    </g>
+  </svg>
+  <script type="text/javascript">
+    const ballContainer = d3.select(".ball-container");
+    const balls = ballContainer.selectAll(".ball");
+
+    balls.transition()
+      .duration(1000)
+      .ease(d3.easeLinear)
+      .attr("transform", function (d, i) {
+        return "translate(0, " + (i * 50) + ")";
+      })
+      .transition()
+      .duration(1000)
+      .ease(d3.easeLinear)
+      .attr("transform", function (d, i) {
+        return "translate(0, " + (-i * 50) + ")";
+      })
+      .on("end", function repeat() {
+        d3.active(this)
+          .transition()
+          .duration(1000)
+          .ease(d3.easeLinear)
+          .attr("transform", function (d, i) {
+            return "translate(0, " + (i * 50) + ")";
+          })
+          .transition()
+          .duration(1000)
+          .ease(d3.easeLinear)
+          .attr("transform", function (d, i) {
+            return "translate(0, " + (-i * 50) + ")";
+          })
+          .on("end", repeat);
+      });
+  </script>
+</body>
+</html>
